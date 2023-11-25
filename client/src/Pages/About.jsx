@@ -1,6 +1,6 @@
 import React from 'react'
 import CountUp from 'react-countup';
-import about_photo from '../assets/services-3.jpg';
+import about_photo from '../assets/aboutphoto.jpg';
 import '../CSS files/AboutStyle.css';
 import DeveloperCard from '../components/DeveloperCard';
 

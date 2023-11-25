@@ -36,13 +36,19 @@ function Navigationbar() {
             </NavLink>
           </Nav>
           <Nav className="me-auto">
-            <NavLink to="/" className="nav-link mx-3">
+            <NavLink to="/" className="nav-link mx-3" style={{
+              fontWeight: "bold"
+            }}>
               Home
             </NavLink>
-            <NavLink to="/about" className="nav-link mx-3">
+            <NavLink to="/about" className="nav-link mx-3" style={{
+              fontWeight: "bold"
+            }}>
               About Us
             </NavLink>
-            <NavLink to="/allposts" className="nav-link mx-3">
+            <NavLink to="/allposts" className="nav-link mx-3" style={{
+              fontWeight: "bold"
+            }}>
               All Posts
             </NavLink>
           </Nav>
