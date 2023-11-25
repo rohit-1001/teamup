@@ -6,7 +6,7 @@ export default function AllPosts() {
         <div>
             {/* <Header /> */}
             <div className='relative items-start flex-col ml-10 mr-10 mt-10'>
-                <h1 className='text-3xl font-semibold underline mb-5'>Upcoming Events!</h1>
+                <h1 className='text-3xl text-blue-900 font-extrabold mb-4 underline'>Upcoming Events!</h1>
                 <Post
                     title={"Barclays Data-Stellar Hackathon"}
                     date={"3 Dec 23"}

@@ -1,6 +1,7 @@
 import React from 'react'
 import Image from '../assets/event1.jpg'
 import JoinButton from '../components/JoinButton'
+import ListItem from '../components/ListItem'
 
 
 const Post = () => {
@@ -13,35 +14,35 @@ const Post = () => {
                 {/* poster div */}
 
                 <div className='mr-10'>
-                    <img src={Image} alt="img" style={{width:"350",
-                        height:"350"}}/>
+                    <img src={Image} alt="img" className='border-4 border-blue-900 p-4 rounded-xl' height={400} width={400} />
                 </div>
 
                 {/* details div */}
                 <div>
-                <h1 className='text-3xl font-semibold mb-5'>Barclays Data-Stellar Hackathon</h1>
-                <div className='w-50 mb-5'>Barclays has organized Data-Stellar hackathon for domains - Blockchain, Machine Learning and WebDevelopment.
-                    Looking for enthusiastic team members willing to collaborate and win this hackathon.
-                </div>
-                <JoinButton/>
+                    <h1 className='text-3xl text-blue-900 font-extrabold mb-4'>Barclays Data-Stellar Hackathon</h1>
+                    <div className='w-100 mb-3 text-xl text-blue-800 font-semibold'>Barclays has organized Data-Stellar hackathon for domains - Blockchain, Machine Learning and WebDevelopment.
+                        Looking for enthusiastic team members willing to collaborate and win this hackathon.
+                    </div>
+                    <JoinButton />
                 </div>
 
             </div>
             {/* second div */}
             <div className='flex flex-col'>
-                <div className='text-xl font-semibold mb-5 mt-5'>
-                Scheduled On 3 Dec 23  | Members Required 3
+                <div className='text-xl text-white font-semibold mb-5 mt-5 pt-3 pb-3 pr-2 pl-2 rounded-xl bg-blue-800 w-1/3 text-center hover:bg-blue-600 shadow'>
+                    Scheduled On 3 Dec 23  | Members Required 3
                 </div>
-                <div className='text-xl font-semibold underline mb-5'>
+                <div className='text-3xl text-blue-900 font-bold'>
                     Description
                 </div>
-                <div className='text-l font-semibold mb-4'>
-                    <ul className='text-l mb-2 ml-2'>
-                    <li>Hello ! My Name is Rohit. I am a 3rd year B.Tech. student at Sardar Patel Institute of Techonology</li>
-                    <li>I am familiar with MERN stack, machine learning and blockchain</li>
-                    <li>Barclays has organized Data-Stellar hackathon for domains - Blockchain, Machine Learning and WebDevelopment.</li>
-                    <li>Looking for enthusiastic team members willing to collaborate and win this hackathon.</li>
-                    </ul>
+                <div className='text-l font-semibold mb-4 pt-4 pb-4 rounded-lg'>
+                    <ol className="space-y-5">
+                        <ListItem count={1} text="It is a long established fact reader" />
+                        <ListItem count={2} text="It is a long established fact reader" />
+                        <ListItem count={3} text="The point of using Lorem Ipsum" />
+                        <ListItem count={4} text="There are many variations of passages" />
+                        <ListItem count={5} text="If you are going to use a of Lorem" />
+                    </ol>
                 </div>
             </div>
         </div>

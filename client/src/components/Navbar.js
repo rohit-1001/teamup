@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { NavLink } from "react-router-dom";
-import logo_with_name from "../assets/logo_with_name.png";
+import logo from "../assets/logo.png";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faHome} from '@fortawesome/free-solid-svg-icons'
 
@@ -18,7 +18,7 @@ function Navigationbar() {
               {" "}
               <div>
                 <img
-                  src={logo_with_name}
+                  src={logo}
                   alt="Logo Here"
                   className="logo1"
                   style={{

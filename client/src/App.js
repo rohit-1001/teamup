@@ -7,6 +7,7 @@ import Home from './components/Home';
 import About from './components/About';
 import AllPosts from './Pages/AllPosts';
 import Post from './Pages/Post';
+import LoginPage from './Pages/LoginPage';
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/post" element={<Post />} />
             <Route path="/allposts" element={<AllPosts />} />
+            <Route path="/login" element={<LoginPage />} />
             {/* <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login details={{ setRole }} />} />
             <Route path="/signup" element={<Signup />} />
