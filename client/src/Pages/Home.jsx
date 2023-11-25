@@ -4,6 +4,7 @@ import HomeComponent2 from '../components/HomeComponent2'
 import HomeCard from '../components/HomeCard'
 import Footer from '../components/Footer'
 
+
 const Home = () => {
   const data=[
     {

@@ -3,8 +3,9 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
-import logo_with_name from "../assets/logo_with_name.png";
+import logo from "../assets/logo.png";
 import { Button } from "@material-ui/core";
+
 
 function Navigationbar() {
   return (
@@ -25,11 +26,11 @@ function Navigationbar() {
             <NavLink to="/">
               <div>
                 <img
-                  src={logo_with_name}
+                  src={logo}
                   alt="Logo Here"
                   className="logo1"
                   style={{
-                    width: "150px",
+                    width: "120px",
                   }}
                 />
               </div>
