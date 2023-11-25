@@ -3,10 +3,12 @@ import React from "react";
 import { Routes, Route} from "react-router-dom";
 import Navbar from './components/Navbar';
 import NotFound from './components/NotFound';
-import Home from './components/Home';
-import About from './components/About';
+import Home from './Pages/Home';
+import About from './Pages/About';
+import Login from './components/Login';
 import AllPosts from './Pages/AllPosts';
 import Post from './Pages/Post';
+import './CSS files/HomeStyle.css';
 
 
 function App() {
@@ -19,6 +21,7 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/post" element={<Post />} />
             <Route path="/allposts" element={<AllPosts />} />
+            <Route path="/login" element={<Login />} />
             {/* <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login details={{ setRole }} />} />
             <Route path="/signup" element={<Signup />} />
