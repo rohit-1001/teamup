@@ -5,9 +5,9 @@ import Navbar from './components/Navbar';
 import NotFound from './components/NotFound';
 import Home from './Pages/Home';
 import About from './Pages/About';
-import Login from './components/Login';
 import AllPosts from './Pages/AllPosts';
 import Post from './Pages/Post';
+import LoginPage from './Pages/LoginPage';
 import './CSS files/HomeStyle.css'
 
 
@@ -22,6 +22,8 @@ function App() {
             <Route path="/about" element={<About />} />
             <Route path="/post" element={<Post />} />
             <Route path="/allposts" element={<AllPosts />} />
+            <Route path="/login" element={<LoginPage />} />
+
             {/* <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login details={{ setRole }} />} />
             <Route path="/signup" element={<Signup />} />
