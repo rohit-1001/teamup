@@ -1,7 +1,7 @@
 import React from 'react'
-import reading from '/public/reading.json'
 import Lottie from 'lottie-react'
 import {useState} from 'react'
+import team from '../assets/team'
 const LoginPage = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -42,7 +42,7 @@ const LoginPage = () => {
             <div className="mx-auto max-w-7xl px-4">
                 <div className="mx-auto max-w-5xl  py-12 md:py-24">
                 <div className='w-full flex flex-row justify-center align-middle text-center text-2xl font-bold text-gray-900 md:text-4xl'>
-                NoteVault
+                <div>Team</div> <div className='text-blue-900'>Up!</div>
             </div>
                     <div className="grid items-center justify-items-center gap-y-10 lg:grid-cols-2 shadow-xl h-2/3">
                         <div className="flex items-center justify-center ">
@@ -87,7 +87,7 @@ const LoginPage = () => {
                                 
                                     <button
                                         type="button"
-                                        onClick={handleLogin}
+                                        // onClick={handleLogin}
                                         className="w-full rounded-md bg-black px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-black/80 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-black"
                                     >
                                         Login
@@ -100,7 +100,7 @@ const LoginPage = () => {
                             className="hidden max-h-full w-full rounded-lg object-cover lg:block"
                             src="https://images.unsplash.com/photo-1543269664-56d93c1b41a6?ixlib=rb-4.0.3&amp;ixid=MnwxMjA3fDB8MHxzZWFyY2h8MzZ8fGhhcHB5JTIwcGVvcGxlfGVufDB8fDB8fA%3D%3D&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=60"
                         /> */}
-                        <Lottie animationData={reading}/>
+                        <Lottie animationData={team}/>
                     </div>
                 </div>
             </div>

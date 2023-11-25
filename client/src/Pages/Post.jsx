@@ -37,9 +37,9 @@ const Post = () => {
                 </div>
                 <div className='text-l font-semibold mb-4 pt-4 pb-4 rounded-lg'>
                     <ol className="space-y-5">
-                        <ListItem count={1} text="It is a long established fact reader" />
-                        <ListItem count={2} text="It is a long established fact reader" />
-                        <ListItem count={3} text="The point of using Lorem Ipsum" />
+                        <ListItem count={1} text="Barclays has organized Barclays Data-Stellar Hackathon on 3rd December 2023" />
+                        <ListItem count={2} text="Looking for enthusiastic, collaborative and hardworking team willing to put efforts and give 100%" />
+                        <ListItem count={3} text="Looking for team with intermediate knowledge in MERN stack, blockchain and AI" />
                         <ListItem count={4} text="There are many variations of passages" />
                         <ListItem count={5} text="If you are going to use a of Lorem" />
                     </ol>
