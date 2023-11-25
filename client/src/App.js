@@ -8,8 +8,11 @@ import About from './Pages/About';
 import AllPosts from './Pages/AllPosts';
 import Post from './Pages/Post';
 import LoginPage from './Pages/LoginPage';
+import CreatePost from'./Pages/CreatePost'
 import './CSS files/HomeStyle.css'
-
+import PostRequests from './Pages/PostRequests';
+import MyPosts from './Pages/MyPosts';
+import MyRequestsPage from './Pages/MyRequestsPage';
 
 
 function App() {
@@ -23,6 +26,13 @@ function App() {
             <Route path="/post" element={<Post />} />
             <Route path="/allposts" element={<AllPosts />} />
             <Route path="/login" element={<LoginPage />} />
+            <Route path="/createpost" element={<CreatePost />} />
+            <Route path="/postrequests" element={<PostRequests />} />
+            <Route path="/myposts" element={<MyPosts />} />
+            <Route path="/myrequests" element={<MyRequestsPage />} />
+
+
+
 
             {/* <Route path="/contact" element={<Contact />} />
             <Route path="/login" element={<Login details={{ setRole }} />} />

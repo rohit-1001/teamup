@@ -1,6 +1,8 @@
 import React from 'react'
 import { NavLink } from "react-router-dom";
 import JoinButton from './JoinButton'
+import Image from '../assets/event1.jpg'
+
 
 const Post = (props) => {
     return (
@@ -10,16 +12,17 @@ const Post = (props) => {
             {/* data div */}
             <div>
                 <NavLink to='/post' className='text-2xl font-bold text-blue-800'>{props.title}</NavLink>
+
                 <div className='text-blue-600 text-lg'>
-                Date {props.date} 
+                    Date {props.date}
                 </div>
                 <div className='text-blue-600 text-lg'>
-                Team Size : {props.size}
+                    Team Size : {props.size}
                 </div>
             </div>
             {/* accept/reject div */}
             <div className='flex align-middle items-center'>
-                <JoinButton/>
+                <JoinButton />
             </div>
 
         </div>

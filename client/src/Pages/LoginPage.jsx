@@ -41,9 +41,7 @@ const LoginPage = () => {
             
             <div className="mx-auto max-w-7xl px-4">
                 <div className="mx-auto max-w-5xl  py-12 md:py-24">
-                <div className='w-full flex flex-row justify-center align-middle text-center text-2xl font-bold text-gray-900 md:text-4xl'>
-                <div>Team</div> <div className='text-blue-900'>Up!</div>
-            </div>
+               
                     <div className="grid items-center justify-items-center gap-y-10 lg:grid-cols-2 shadow-xl h-2/3">
                         <div className="flex items-center justify-center ">
                             <div className="px-2 md:px-12 ">
