@@ -31,12 +31,12 @@ const CreatePost = () => {
     return (
         // main div
         <div className='pt-24 pl-10 pr-10 w-full h-full'>
-            <h1 className='text-3xl text-blue-900 font-extrabold mb-4 underline'>Create Post</h1>
+            <h1 className='text-3xl text-blue-900 font-bold mb-4 underline'>Create Post</h1>
 
             <div className='flex flex-row justify-center'>
 
                 <div className='flex flex-col items-center justify-center border-2 border-dashed border-black h-full w-1/3 ml-5 p-5'>
-                    <div>Upload Poster Here</div>
+                    <div className='text-l text-blue-900 font-bold mb-4 underline'>Upload Poster</div>
                     <input type='file' className='pl-2 mt-5' />
                 </div>
 
