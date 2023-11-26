@@ -29,7 +29,7 @@ const Post = () => {
             </div>
             {/* second div */}
             <div className='flex flex-col'>
-                <div className='text-xl text-white font-semibold mb-3 mt-5 pt-3 pb-3 pr-2 pl-2 rounded-xl bg-blue-800 w-1/3 text-center hover:bg-blue-600 shadow'>
+                <div className='text-xl text-white font-semibold mb-3 mt-5 p-2 rounded-xl bg-blue-800 w-1/3 text-center hover:bg-blue-600 shadow'>
                     Scheduled On 3 Dec 23  | Members Required 3
                 </div>
                 <div className='text-3xl text-blue-900 font-bold'>
