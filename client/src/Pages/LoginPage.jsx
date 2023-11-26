@@ -46,12 +46,12 @@ const LoginPage = () => {
             </div>
                     <div className="grid items-center justify-items-center gap-y-10 lg:grid-cols-2 shadow-xl h-2/3">
                         <div className="flex items-center justify-center ">
-                            <div className="px-2 md:px-12 ">
+                            <div className="px-2 md:px-12 " style={{width:"350px", height:"350px"}}>
                                 <p className="text-2xl font-bold text-gray-900 md:text-4xl text-center">
                                     Login
                                 </p>
                                 <form action="" className="mt-8 space-y-4 w-full">
-                                        <div className="grid w-full  items-center gap-1.5">
+                                        <div className="grid w-full  items-center gap-1.5 mb-7">
                                             <label
                                                 className="text-sm font-medium leading-none text-gray-700 peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                                 htmlFor="user_name"
@@ -68,7 +68,7 @@ const LoginPage = () => {
                                             />
                                         </div>
                                         
-                                    <div className="grid w-full  items-center gap-1.5">
+                                    <div className="grid w-full  items-center gap-1.5" style={{marginBottom:"20px"}}>
                                         <label
                                             className="text-sm font-medium leading-none text-black peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                                             htmlFor="email"
