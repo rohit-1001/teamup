@@ -57,6 +57,9 @@ function Navigationbar() {
             <NavLink to="/login" className="nav-link">
               <Button variant="outlined">Login</Button>
             </NavLink>
+            <NavLink to="/register" className="nav-link">
+              <Button variant="outlined">Register</Button>
+            </NavLink>
           </Nav>
         </Navbar.Collapse>
       </Container>
