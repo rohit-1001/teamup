@@ -2,7 +2,7 @@ import React from 'react'
 import Image from '../assets/event1.jpg'
 import UserRequest from '../components/UserRequest'
 
-const PostRequests = () => {
+const PostRequests = (props) => {
     return (
         // main div
 
@@ -15,14 +15,13 @@ const PostRequests = () => {
                 {/* poster div */}
 
                 <div className='mr-10'>
-                    <img src={Image} alt="img" className='border-2 border-blue-900 p-4 rounded-xl' height={400} width={400} />
+                    <img src={props.details.logo} alt="img" className='border-2 border-blue-900 p-4 rounded-xl' height={400} width={400} />
                 </div>
 
                 {/* details div */}
                 <div>
-                    <h1 className='text-3xl text-blue-900 font-extrabold mb-4'>Barclays Data-Stellar Hackathon</h1>
-                    <div className='w-100 mb-3 text-xl text-blue-800 font-semibold'>Barclays has organized Data-Stellar hackathon for domains - Blockchain, Machine Learning and WebDevelopment.
-                        Looking for enthusiastic team members willing to collaborate and win this hackathon.
+                    <h1 className='text-3xl text-blue-900 font-extrabold mb-4'>{props.details.title}</h1>
+                    <div className='w-100 mb-3 text-xl text-blue-800 font-semibold'>{props.details.description}
                     </div>
 
                 </div>
