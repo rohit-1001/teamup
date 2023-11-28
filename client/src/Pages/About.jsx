@@ -35,7 +35,7 @@ const About = () => {
         <div className="container">
           <div className="row d-flex no-gutters">
             <div className="col-md-6 d-flex order-md-last">
-              <div className="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-center mb-4 mb-sm-0" style={{ backgroundImage: 'url(images/about-1.jpg)' }}>
+              <div className="img img-video d-flex align-self-stretch align-items-center justify-content-center justify-content-md-center mb-4 mb-sm-0" >
               </div>
             </div>
             <div className="sec2div1222">

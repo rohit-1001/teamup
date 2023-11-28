@@ -1,0 +1,37 @@
+it('should not create post with team size not a number', (done) => {
+      chai.request(app)
+        .post('/createnewpost')
+        .send({
+          email: 'testemail@gmail.com',
+          post: {
+            title: 'Invalid Team Size Post',
+            description: 'Invalid Team Size Description',
+            domain: 'Invalid Team Size Domain',
+            teamsize: 'invalid', // Team size should be a number
+            details: 'Invalid Team Size Details',
+            date: '2023-12-01',
+            logo: 'invalid-logo-url',
+          },
+        })
+        .end((err, res) => {
+          res.should.have.status(422); // Adjust status code based on your error response
+          res.body.should.have.property('error').eql('Team size should be a number');
+          done();
+        });
+    });
+
+
+    it("should not sign in with non-existing user", function () {
+    this.timeout(5000); // Set timeout to 5 seconds
+    const data = {
+      email: "nonexisting1@example.com",
+      password: "nonexisting87",
+    };
+    return chai
+      .request(app)
+      .post("/usersignin")
+      .send({ data })
+      .then((response) => {
+        expect(response).to.have.status(400);
+      });
+  });

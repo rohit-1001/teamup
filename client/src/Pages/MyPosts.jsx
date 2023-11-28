@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import Image from "../assets/event1.jpg";
 import axios from "axios";
 import UserRequest from "../components/UserRequest";
+import PostRequests from "./PostRequests";
 import {
   Container,
   Grid,
@@ -87,7 +88,7 @@ const MyPosts = () => {
                 className="border rounded"
               />
 
-              <h4
+              {/* <h4
                 onClick={() => {
                   setCurr(post.post);
                   setOpenModal(true);
@@ -95,8 +96,11 @@ const MyPosts = () => {
                 className="text-xl font-bold text-blue-800 ml-5 no-underline hover:underline"
               >
                 {post.post.title}
-              </h4>
-              <Modal open={openModal} onClose={handleCloseModal}>
+              </h4> */}
+              <NavLink to={`/postrequests?title=${post.post.title}&description=${post.post.description}`} className='text-2xl font-bold text-blue-800'>{post.post.title}</NavLink>
+
+              
+              {/* <Modal open={openModal} onClose={handleCloseModal}>
                 <Box
                   sx={{
                     position: "absolute",
@@ -112,15 +116,12 @@ const MyPosts = () => {
                     maxHeight: "90vh", // Limit the maximum height to the viewport height
                   }}
                 >
-                  {/* <PostRequests details={{ curr }} /> */}
                   <div className="pt-24 pl-24 pr-24">
                     <h1 className="text-3xl text-blue-900 font-extrabold mb-4 underline">
                       Pending Requests
                     </h1>
 
-                    {/* first div */}
                     <div className="flex flex-row">
-                      {/* poster div */}
 
                       <div className="mr-10">
                         <img
@@ -132,7 +133,6 @@ const MyPosts = () => {
                         />
                       </div>
 
-                      {/* details div */}
                       <div>
                         <h1 className="text-3xl text-blue-900 font-extrabold mb-4">
                           {curr.title}
@@ -142,19 +142,11 @@ const MyPosts = () => {
                         </div>
                       </div>
                     </div>
-                    {/* second div */}
-                    {/* <div className="flex flex-col">
-                        {console.log("curr : ", curr)}
-                    {curr.selectedmembers ? curr.selectedmembers.map((mem, index) => (
-                        console.log("mem : ", mem),
-                        <UserRequest details={{email:mem.email}} />
-                    )) : "No selected members"} */}
                     <UserRequest details={{id:1, email:"rohan@gmail.com"}} />
                     <UserRequest details={{id:2, email:"r@gmail.com"}} />
-                    {/* </div> */}
                   </div>
                 </Box>
-              </Modal>
+              </Modal> */}
             </div>
           </div>
         ))}

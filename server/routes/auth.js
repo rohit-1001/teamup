@@ -9,7 +9,7 @@ const cookieParser = require("cookie-parser");
 router.use(cookieParser());
 
 router.post("/userregister", async (req, res) => {
-  const { name, email, phone, password, cpassword, age, location, interests } =
+  const { name, email, phone, password, cpassword, age, location, logo } =
     req.body;
   if (
     !name ||
@@ -18,8 +18,7 @@ router.post("/userregister", async (req, res) => {
     !password ||
     !cpassword ||
     !age ||
-    !location ||
-    !interests
+    !location
   ) {
     return res.status(422).json({ error: "All fields need to be filled" });
   }
@@ -31,18 +30,34 @@ router.post("/userregister", async (req, res) => {
     } else if (password != cpassword) {
       return res.status(422).json({ error: "Passwords do not match" });
     }
-    const user = new User({
-      name,
-      email,
-      phone,
-      password,
-      cpassword,
-      age,
-      location,
-      interests,
-    });
-    await user.save();
-    return res.status(200).json({ msg: "User registered successfully" });
+    if(logo !== ""){
+      const user = new User({
+        name,
+        email,
+        phone,
+        password,
+        cpassword,
+        age,
+        location,
+        logo,
+      });
+      await user.save();
+      console.log("user registered successfully")
+      return res.status(200).json({ msg: "User registered successfully" });
+    }
+    else{
+      const user = new User({
+        name,
+        email,
+        phone,
+        password,
+        cpassword,
+        age,
+        location,
+      });
+      await user.save();
+      return res.status(200).json({ msg: "User registered successfully" });
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Some unexpected error occured" });
@@ -131,64 +146,22 @@ router.post("/updateprofile", async (req, res) => {
   }
 });
 
-// router.post("/createpost", async (req, res) => {
-//   let email;
-//   if (req.cookies) {
-//     if (req.cookies.teamup) {
-//       if (req.cookies.teamup.token) {
-//         const token = req.cookies.teamup.token;
-//         const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
-//         email = decodedToken.email;
-//       }
-//     } else {
-//       return res.status(500).json({ error: "Please login to continue" });
-//     }
-//   } else {
-//     return res.status(500).json({ error: "Please login to continue" });
-//   }
-//   const {  title, description, domain, teamsize, details, date, logo } =
-//     req.body.post;
-//   if (!title || !description || !domain || !details || !date) {
-//     return res.status(422).json({ error: "All fields need to be filled" });
-//   }
-//   if(isNaN(teamsize)){
-//     return res.status(422).json({ error: "Team size should be a number" });
-//   }
-
-//   try {
-//     let post;
-//     if (logo !== null) {
-//       post = {
-//         title,
-//         description,
-//         domain,
-//         teamsize,
-//         details,
-//         date,
-//       };
-//     } else {
-//       post = {
-//         title,
-//         description,
-//         domain,
-//         teamsize,
-//         details,
-//         date,
-//         logo,
-//       };
-//     }
-//     const newpost = new Post({ email, post });
-//     await newpost.save();
-//     return res.status(200).json({ msg: "Post created successfully" });
-//   } catch (error) {
-//     console.log(error);
-//     return res.status(500).json({ error: "Some unexpected error occured" });
-//   }
-// });
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 router.post("/createpost", async (req, res) => {
-  const email = req.body.email;
-  const { title, description, domain, teamsize, details, date, logo } =
+  let email;
+  if (req.cookies) {
+    if (req.cookies.teamup) {
+      if (req.cookies.teamup.token) {
+        const token = req.cookies.teamup.token;
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+        email = decodedToken.email;
+      }
+    } else {
+      return res.status(500).json({ error: "Please login to continue" });
+    }
+  } else {
+    return res.status(500).json({ error: "Please login to continue" });
+  }
+  const {  title, description, domain, teamsize, details, date, logo } =
     req.body.post;
   if (!title || !description || !domain || !details || !date) {
     return res.status(422).json({ error: "All fields need to be filled" });
@@ -228,11 +201,54 @@ router.post("/createpost", async (req, res) => {
   }
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+router.post("/createnewpost", async (req, res) => {
+  const email = req.body.email;
+  const { title, description, domain, teamsize, details, date, logo } =
+    req.body.post;
+  if (!title || !description || !domain || !details || !date) {
+    return res.status(422).json({ error: "All fields need to be filled" });
+  }
+  if(isNaN(teamsize)){
+    return res.status(422).json({ error: "Team size should be a number" });
+  }
+
+  try {
+    let post;
+    if (logo !== null) {
+      post = {
+        title,
+        description,
+        domain,
+        teamsize,
+        details,
+        date,
+      };
+    } else {
+      post = {
+        title,
+        description,
+        domain,
+        teamsize,
+        details,
+        date,
+        logo,
+      };
+    }
+    const newpost = new Post({ email, post });
+    await newpost.save();
+    console.log("post created successfully")
+    return res.status(200).json({ msg: "Post created successfully" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ error: "Some unexpected error occured" });
+  }
+});
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 router.get("/allposts", async (req, res) => {
   try {
     const posts = await Post.find();
-    return res.status(200).json({ posts: posts.reverse() });
+    return res.status(200).json({ posts: posts.reverse().slice(0, 10) });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Some unexpected error occured" });

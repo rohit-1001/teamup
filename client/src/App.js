@@ -14,7 +14,7 @@ import "./CSS files/HomeStyle.css";
 import PostRequests from "./Pages/PostRequests";
 import MyPosts from "./Pages/MyPosts";
 import MyRequestsPage from "./Pages/MyRequestsPage";
-import Register from "./Pages/Register";
+import Register from "./Pages/CreateProfile";
 import axios from "axios";
 
 function App() {
