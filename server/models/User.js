@@ -42,7 +42,14 @@ const userSchema = new mongoose.Schema({
     ],
     appliedposts:[
         {
-            type: String
+            id:{
+                type: String,
+                required: true
+            },
+            status:{
+                type: String,
+                required: true
+            }
         }
     ],
     tokens: [

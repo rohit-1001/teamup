@@ -85,43 +85,46 @@
 import React, {useEffect, useState} from "react";
 import Post from "../components/PostComp";
 import axios, { all } from "axios";
+require('../CSS files/Somestyles.css')
 
 
-export default function AllPosts() {
-
+export default function AllPosts(props) {
     const [posts, setPosts] = useState([]);
-
+    
     const allposts = async () => {
         try {
             const res = await axios.get("/allposts");
-            console.log(res.data.posts)
             setPosts(res.data.posts);
-            setTimeout(() => {
-            }, 5000);
-            console.log("posts : ", posts)
         } catch (error) {
             console.log(error);
         }
     }
-
-    setTimeout(() => {
+    useEffect(() => {
         allposts();
-    }, 5000);
+    }, [])
 
 
    
     return (
         <div>
-            {/* <Header /> */}
             <div className='relative items-start flex-col ml-10 mr-10'>
                 <h1 className='pt-24 text-3xl text-blue-900 font-extrabold mb-4 underline'>Upcoming Events!</h1>
+                {/* <div style={{
+                   display: "grid",
+                   gridTemplateColumns: "repeat(4, 1fr)",
+                   gridGap: "50px"
+                }}> */}
             {
-                posts.map((post, index) => {
-                        <Post key={index}
-                            details={post}
+                posts.map((post) => {
+                    return(
+
+                        <Post
+                            post={{post, role:props.details.role}}
                         />
-                })
+                        )
+                    })
             }
+                    {/* </div> */}
             </div>
         </div>
     )

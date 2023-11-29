@@ -4,6 +4,7 @@ import JoinButton from "./JoinButton";
 import Image from "../assets/event1.jpg";
 import { Room } from "@mui/icons-material";
 import PostRequests from "../Pages/PostRequests";
+
 import {
   Container,
   Grid,

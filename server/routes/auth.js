@@ -40,9 +40,11 @@ router.post("/userregister", async (req, res) => {
         age,
         location,
         logo,
+        interests: [],
+        appliedposts: [],
+        tokens: [],
       });
       await user.save();
-      console.log("user registered successfully")
       return res.status(200).json({ msg: "User registered successfully" });
     }
     else{
@@ -54,6 +56,9 @@ router.post("/userregister", async (req, res) => {
         cpassword,
         age,
         location,
+        interests: [],
+        appliedposts: [],
+        tokens: [],
       });
       await user.save();
       return res.status(200).json({ msg: "User registered successfully" });
@@ -146,7 +151,7 @@ router.post("/updateprofile", async (req, res) => {
   }
 });
 
-router.post("/createpost", async (req, res) => {
+router.post("/createpostpost", async (req, res) => {
   let email;
   if (req.cookies) {
     if (req.cookies.teamup) {
@@ -162,7 +167,7 @@ router.post("/createpost", async (req, res) => {
     return res.status(500).json({ error: "Please login to continue" });
   }
   const {  title, description, domain, teamsize, details, date, logo } =
-    req.body.post;
+    req.body;
   if (!title || !description || !domain || !details || !date) {
     return res.status(422).json({ error: "All fields need to be filled" });
   }
@@ -171,18 +176,7 @@ router.post("/createpost", async (req, res) => {
   }
 
   try {
-    let post;
-    if (logo !== null) {
-      post = {
-        title,
-        description,
-        domain,
-        teamsize,
-        details,
-        date,
-      };
-    } else {
-      post = {
+      const post = {
         title,
         description,
         domain,
@@ -190,8 +184,9 @@ router.post("/createpost", async (req, res) => {
         details,
         date,
         logo,
+        appliedmembers: [],
+        selectedmembers: [],
       };
-    }
     const newpost = new Post({ email, post });
     await newpost.save();
     return res.status(200).json({ msg: "Post created successfully" });
@@ -247,8 +242,8 @@ router.post("/createnewpost", async (req, res) => {
 
 router.get("/allposts", async (req, res) => {
   try {
-    const posts = await Post.find();
-    return res.status(200).json({ posts: posts.reverse().slice(0, 10) });
+    const posts = await Post.find({status : "active"});
+    return res.status(200).json({ posts: posts.reverse() });
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: "Some unexpected error occured" });
@@ -295,12 +290,22 @@ router.get("/myrequests", async (req, res) => {
     return res.status(500).json({ error: "Please login to continue" });
   }
   try {
-    const user = await User.find({ email: email });
-    const appliedposts = user.appliedposts
-    let posts = []
-    for(let id in appliedposts){
-        posts.push(await Post.find({ _id: id }));
+    const user = await User.findOne({ email: email });
+    if(!user){
+      return res.status(400).json({ error: "User not found" });
     }
+    console.log(user)
+    const appliedposts = user.appliedposts
+    console.log(user.appliedposts)
+    if(typeof(appliedposts)==="undefined"){
+      return res.status(400).json({ error: "No requests found" });
+    }
+    let posts = []
+    for(let data in appliedposts){
+      console.log(data)
+        posts.push(await Post.find({ _id: data.id }));
+    }
+    console.log(posts)
     return res.status(200).json({ posts: posts.reverse() });
   } catch (error) {
     console.log(error);
@@ -320,6 +325,172 @@ router.post('/getuser', async (req, res) => {
     const user = await User.findOne({ email: email });
     console.log("user : ",user)
     return res.status(200).json(user);
+  } catch (error) {
+    return res.status(400).json({ error: "Some error occured" });
+  }
+})
+
+router.post('/applyforpost', async (req, res) => {
+  let email;
+  if (req.cookies) {
+    if (req.cookies.teamup) {
+      if (req.cookies.teamup.token) {
+        const token = req.cookies.teamup.token;
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+        email = decodedToken.email;
+      }
+    } else {
+      return res.status(500).json({ error: "Please login to continue" });
+    }
+  } else {
+    return res.status(500).json({ error: "Please login to continue" });
+  }
+  const postid = req.body.postid;
+  try {
+    const user = await User.findOne({email: email})
+    if(!user){
+      return res.status(400).json({ error: "User not found" });
+    }
+    const post = await Post.findOne({ _id: postid });
+    if(!post){
+      return res.status(400).json({ error: "Post not found" });
+    }
+    let appliedposts = user.appliedposts;
+    if(typeof(appliedposts)==="undefined"){
+      appliedposts = []
+    }
+    for(let i=0;i<appliedposts.length;i++){
+      if(appliedposts[i].id === postid){
+        return res.status(400).json({ error: "Already applied for this post" });
+      }
+    }
+    let selectedmembers = post.post.selectedmembers ? post.post.selectedmembers : [];
+    if(selectedmembers.length === post.post.teamsize){
+      return res.status(400).json({ error: "Team is full" });
+    }
+    appliedposts.push({id:postid, status:"pending"});
+    let appliedmembers = post.post.appliedmembers ? post.post.appliedmembers : [];
+    post.post.appliedmembers.push({email:email});
+    await Post.replaceOne({ _id: postid }, post);
+    await User.replaceOne({ email: email }, user);
+    return res.status(200).json({ msg: "Applied successfully" });
+  } catch (error) {
+    return res.status(500).json({ error: "Some error occured" });
+  }
+})
+
+router.post('/acceptapplication', async (req, res) => {
+  let email;
+  if (req.cookies) {
+    if (req.cookies.teamup) {
+      if (req.cookies.teamup.token) {
+        const token = req.cookies.teamup.token;
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+        email = decodedToken.email;
+      }
+    } else {
+      return res.status(500).json({ error: "Please login to continue" });
+    }
+  } else {
+    return res.status(500).json({ error: "Please login to continue" });
+  }
+  const postid = req.body.postid;
+  const applicantemail = req.body.applicantemail;
+  try {
+    const post = await Post.findOne({ _id: postid });
+    if(!post){
+      return res.status(400).json({ error: "Post not found" });
+    }
+    let selectedmembers = post.post.selectedmembers;
+      if(typeof(selectedmembers)==="undefined"){
+        selectedmembers = []
+      }
+    if(selectedmembers.length === post.post.teamsize){
+      return res.status(400).json({ error: "Team is full" });
+    }
+    else{
+      let appliedmembers = post.post.appliedmembers;
+      if(typeof(appliedmembers)==="undefined"){
+        appliedmembers = []
+      }
+      for (let i = 0; i < appliedmembers.length; i++) {
+        if (appliedmembers[i].email === applicantemail) {
+          appliedmembers.splice(i, 1);
+          break;
+        }
+      }
+      selectedmembers.push({email:applicantemail});
+      
+      const user = User.findOne({email: applicantemail})
+      let appliedposts = user.appliedposts;
+      if(typeof(appliedposts)==="undefined"){
+        appliedposts = []
+      }
+      for(let i=0;i<appliedposts.length;i++){
+        if(appliedposts[i].id === postid){
+          appliedposts[i].status = "accepted"
+          break
+        }
+      }
+      if(selectedmembers.length === post.post.teamsize){
+        post.status = "inactive"
+      }
+      await User.replaceOne({ email: applicantemail }, user);
+      await Post.replaceOne({ _id: postid }, post);
+      return res.status(200).json({ msg: "Application accepted successfully" });
+    }
+  } catch (error) {
+    console.log(error)
+    return res.status(400).json({ error: "Some error occured" });
+  }
+})
+
+router.post('/rejectapplication', async (req, res) => {
+  let email;
+  if (req.cookies) {
+    if (req.cookies.teamup) {
+      if (req.cookies.teamup.token) {
+        const token = req.cookies.teamup.token;
+        const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
+        email = decodedToken.email;
+      }
+    } else {
+      return res.status(500).json({ error: "Please login to continue" });
+    }
+  } else {
+    return res.status(500).json({ error: "Please login to continue" });
+  }
+  const postid = req.body.postid;
+  const applicantemail = req.body.applicantemail;
+  try {
+    const post = await Post.findOne({ _id: postid });
+    if(!post){
+      return res.status(400).json({ error: "Post not found" });
+    }
+    let appliedmembers = post.post.appliedmembers;
+    if(typeof(appliedmembers)==="undefined"){
+      appliedmembers = []
+    }
+    for (let i = 0; i < appliedmembers.length; i++) {
+      if (appliedmembers[i].email === applicantemail) {
+        appliedmembers.splice(i, 1);
+        break;
+      }
+    }
+
+    const user = User.findOne({email: applicantemail})
+    let appliedposts = user.appliedposts;
+    if(typeof(appliedposts)==="undefined"){
+      appliedposts = []
+    }
+    for(let i=0;i<appliedposts.length;i++){
+      if(appliedposts[i].id === postid){
+        appliedposts[i].status = "rejected"
+      }
+    }
+    await User.replaceOne({ email: applicantemail }, user);
+    await Post.replaceOne({ _id: postid }, post);
+    return res.status(200).json({ msg: "Application rejected" });
   } catch (error) {
     return res.status(400).json({ error: "Some error occured" });
   }

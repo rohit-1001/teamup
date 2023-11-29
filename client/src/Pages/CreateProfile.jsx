@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { TextField } from "@material-ui/core";
 
 const CreateProfile = () => {
   const navigate = useNavigate();
@@ -23,6 +23,7 @@ const CreateProfile = () => {
       const reader = new FileReader();
       reader.onload = (event) => {
         const base64Image = event.target.result;
+        console.log(base64Image);
         setUser({ ...user, logo: base64Image });
       };
       reader.readAsDataURL(file);
@@ -37,11 +38,11 @@ const CreateProfile = () => {
         console.log("register2")
         const res = await axios.post("/userregister", user)
         if (res.status === 200) {
+        // toast.success(res.data.msg);
         toast.success(res.data.msg);
         navigate("/login");
       }
     } catch (error) {
-        console.log(error)
       if (error.response) {
         toast.error(error.response.data.error);
       } else {
@@ -50,6 +51,7 @@ const CreateProfile = () => {
     }
   };
   return (
+    <>
     <form>
       <div className="pt-24 pl-10 pr-10 w-full h-full">
         <h1 className="text-3xl text-blue-900 font-bold mb-4 underline ml-10">
@@ -134,7 +136,7 @@ const CreateProfile = () => {
           </div>
 
           <div className="w-1/3 ml-5">
-            <input
+            {/* <input
               className="flex h-10 w-full rounded-md border border-black bg-transparent px-3 py-2 text-md mb-4 "
               type="text"
               id="name"
@@ -143,9 +145,21 @@ const CreateProfile = () => {
               value={user.name}
               onChange={handleFieldChange}
               required
+            /> */}
+            <TextField
+              id="standard-basic"
+              label="Name"
+              variant="standard"
+              name="name"
+              value={user.name}
+              onChange={handleFieldChange}
+              style={{ width: "250px" }}
+              required
             />
+            <br />
+            <br />
 
-            <input
+            {/* <input
               className="flex h-10 w-full rounded-md border border-black bg-transparent px-3 py-2 text-md mb-4"
               type="email"
               id="email"
@@ -154,9 +168,22 @@ const CreateProfile = () => {
               value={user.email}
               onChange={handleFieldChange}
               required
+            /> */}
+            <TextField
+              id="standard-basic"
+              type="email"
+              label="E-mail"
+              variant="standard"
+              name="email"
+              value={user.email}
+              onChange={handleFieldChange}
+              style={{ width: "250px" }}
+              required
             />
+            <br />
+            <br />
 
-            <input
+            {/* <input
               className="flex h-10 w-full rounded-md border border-black bg-transparent px-3 py-2 text-md mb-4"
               type="number"
               id="phone"
@@ -165,9 +192,22 @@ const CreateProfile = () => {
               value={user.phone}
               onChange={handleFieldChange}
               required
+            /> */}
+            <TextField
+              id="standard-basic"
+              type="number"
+              label="Phone"
+              variant="standard"
+              name="phone"
+              value={user.phone}
+              onChange={handleFieldChange}
+              style={{ width: "250px" }}
+              required
             />
+            <br />
+            <br />
 
-            <input
+            {/* <input
               className="flex h-10 w-full rounded-md border border-black bg-transparent px-3 py-2 text-md mb-4"
               type="password"
               id="password"
@@ -176,9 +216,22 @@ const CreateProfile = () => {
               value={user.password}
               onChange={handleFieldChange}
               required
+            /> */}
+            <TextField
+              id="standard-basic"
+              type="password"
+              label="Password"
+              variant="standard"
+              name="password"
+              value={user.password}
+              onChange={handleFieldChange}
+              style={{ width: "250px" }}
+              required
             />
+            <br />
+            <br />
 
-            <input
+            {/* <input
               className="flex h-10 w-full rounded-md border border-black bg-transparent px-3 py-2 text-md mb-4"
               type="password"
               id="cpassword"
@@ -187,9 +240,22 @@ const CreateProfile = () => {
               value={user.cpassword}
               onChange={handleFieldChange}
               required
+            /> */}
+            <TextField
+              id="standard-basic"
+              type="password"
+              label="Confirm Password"
+              variant="standard"
+              name="cpassword"
+              value={user.cpassword}
+              onChange={handleFieldChange}
+              style={{ width: "250px" }}
+              required
             />
+            <br />
+            <br />
 
-            <input
+            {/* <input
               className="flex h-10 w-full rounded-md border border-black bg-transparent px-3 py-2 text-md mb-4"
               type="number"
               id="age"
@@ -198,9 +264,22 @@ const CreateProfile = () => {
               value={user.age}
               onChange={handleFieldChange}
               required
+            /> */}
+            <TextField
+              id="standard-basic"
+              type="number"
+              label="Age"
+              variant="standard"
+              name="age"
+              value={user.age}
+              onChange={handleFieldChange}
+              style={{ width: "250px" }}
+              required
             />
+            <br />
+            <br />
 
-            <input
+            {/* <input
               className="flex h-10 w-full rounded-md border border-black bg-transparent px-3 py-2 text-md mb-4"
               type="text"
               id="location"
@@ -209,7 +288,20 @@ const CreateProfile = () => {
               value={user.location}
               onChange={handleFieldChange}
               required
+            /> */}
+            <TextField
+              id="standard-basic"
+              type="text"
+              label="City"
+              variant="standard"
+              name="location"
+              value={user.location}
+              onChange={handleFieldChange}
+              style={{ width: "250px" }}
+              required
             />
+            <br />
+            <br />
             <div
               style={{
                 display: "flex",
@@ -225,6 +317,7 @@ const CreateProfile = () => {
         </div>
       </div>
     </form>
+  </>
   );
 };
 

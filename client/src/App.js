@@ -16,6 +16,8 @@ import MyPosts from "./Pages/MyPosts";
 import MyRequestsPage from "./Pages/MyRequestsPage";
 import Register from "./Pages/CreateProfile";
 import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer} from "react-toastify";
 
 function App() {
   const [role, setRole] = useState("visitor");
@@ -32,12 +34,13 @@ function App() {
     <>
       {role === "visitor" ? (
         <>
+          <ToastContainer />
           <Navbar details={{ setRole }}/>
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
-            <Route path="/allposts" element={<AllPosts />} />
+            <Route path="/allposts" element={<AllPosts details={{role}}/>} />
             <Route path="/login" element={<LoginPage details={{ setRole }}/>} />
             <Route path="/register" element={<Register />} />
             <Route path="*" element={<NotFound />} />
@@ -45,13 +48,14 @@ function App() {
         </>
       ) : (
         <>
+          <ToastContainer />
           <Navbar2 details={{ setRole }}/>
           <Routes>
             <Route exact path="/" element={<Home />} />
             <Route exact path="/home" element={<Home />} />
             <Route path="/about" element={<About />} />
             <Route path="/post" element={<Post />} />
-            <Route path="/allposts" element={<AllPosts />} />
+            <Route path="/allposts" element={<AllPosts details={{role}} />} />
             <Route path="/createpost" element={<CreatePost />} />
             <Route path="/postrequests" element={<PostRequests />} />
             <Route path="/myposts" element={<MyPosts />} />

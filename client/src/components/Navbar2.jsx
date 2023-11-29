@@ -6,7 +6,6 @@ import Navbar from "react-bootstrap/Navbar";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { Button } from "@material-ui/core";
-import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 import axios from 'axios'
 

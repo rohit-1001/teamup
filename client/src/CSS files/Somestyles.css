@@ -1,0 +1,45 @@
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+  }
+  
+  .col-md-3 {
+    flex-basis: 25%;
+  }
+  
+  .card {
+    background-color: #f8f9fa;
+    border: none;
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.05);
+    border-radius: 0.75rem;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-text {
+    font-size: 0.875rem;
+  }
+
+
+  .card-image {
+    flex: 0 0 200px; /* Set fixed width for the image to 200px */
+    margin-right: 20px;
+  }
+  
+  .card-body {
+    flex: 1; /* Allow the body to expand to fill the remaining space */
+  }
+  
+  h5.card-title {
+    font-size: 24px; /* Increase font size for the card title */
+  }
+  
+  p.card-text {
+    font-size: 18px; /* Increase font size for the card text */
+  }
+
+  

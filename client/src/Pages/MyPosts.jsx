@@ -1,21 +1,20 @@
 import React from "react";
 import UserPost from "../components/UserPost";
 import { NavLink } from "react-router-dom";
-import { Button } from "@material-ui/core";
+import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from "react";
 import Image from "../assets/event1.jpg";
 import axios from "axios";
 import UserRequest from "../components/UserRequest";
 import PostRequests from "./PostRequests";
-import {
-  Container,
-  Grid,
-  Paper,
-  Typography,
-  Modal,
-  Box,
-  TextField,
-} from "@mui/material";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { Container, Grid, Paper, Modal, Box, TextField } from "@mui/material";
+import { toast } from "react-toastify";
+
 const MyPosts = () => {
   const [myposts, setMyPosts] = useState([]);
   const [curr, setCurr] = useState([]);
@@ -27,14 +26,63 @@ const MyPosts = () => {
     });
     console.log("c.data : ", c.data.posts);
     setMyPosts(c.data.posts);
-    setTimeout(() => {
-    }, 5000);
+    setTimeout(() => {}, 5000);
     console.log("myposts : ", myposts);
+  };
+
+  const handleaccept = async (id, email) => {
+    let confirmapplication = window.confirm(
+      "Do you want to accept the application?"
+    );
+    if (confirmapplication) {
+      try {
+        const res = await axios.post(
+          "/acceptapplication",
+          {
+            postid: id,
+            applicantemail: email,
+          },
+          { withCredentials: true }
+        );
+        toast.success("Request accepted successfully");
+      } catch (error) {
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
+      }
+    }
+  };
+
+  const handlereject = async (id, email) => {
+    let confirmapplication = window.confirm(
+      "Do you want to reject the application?"
+    );
+    if (confirmapplication) {
+      try {
+        const res = await axios.post(
+          "/rejectapplication",
+          {
+            postid: id,
+            applicantemail: email,
+          },
+          { withCredentials: true }
+        );
+        toast.success("Request rejected");
+      } catch (error) {
+        if (error.response) {
+          toast.error(error.response.data.error);
+        } else {
+          toast.error("Some error occured");
+        }
+      }
+    }
   };
 
   useEffect(() => {
     getmyposts();
-  },[]);
+  }, []);
 
   const handleOpenModal = async () => {
     setOpenModal(true);
@@ -43,8 +91,6 @@ const MyPosts = () => {
   const handleCloseModal = () => {
     setOpenModal(false);
   };
-
-  
 
   return (
     <div>
@@ -60,95 +106,138 @@ const MyPosts = () => {
             </NavLink>
           </nav>
         </div>
-        {/* {myposts.map((post, index) => (
-                <UserPost
-                    key={index}
-                    title={post.post.title}
-                    description={post.post.description}
-                    domain={post.post.domain}
-                    teamsize={post.post.teamsize}
-                    details={post.post.details}
-                    date={post.post.date}
-                    logo={post.post.logo}
-                    selectedmembers={post.post.selectedmembers}
-                    appliedmembers={post.post.appliedmembers}
-                />
-            ))} */}
         {myposts.map((post, index) => (
-          <div
-            className="flex flex-row justify-between p-3 pl-10 pr-10 w-full shadow
-        rounded-lg mb-3 text-l font-semibold "
+          <Accordion
+            style={{
+              width: "80%",
+              margin: "auto",
+              marginTop: "20px",
+            }}
           >
-            {/* data div */}
-            <div className="flex flex-row">
-              <img
-                src={Image}
-                width={50}
-                height={25}
-                className="border rounded"
-              />
-
-              {/* <h4
-                onClick={() => {
-                  setCurr(post.post);
-                  setOpenModal(true);
-                }}
-                className="text-xl font-bold text-blue-800 ml-5 no-underline hover:underline"
+            <AccordionSummary
+              expandIcon={<ExpandMoreIcon />}
+              aria-controls="panel1a-content"
+            >
+              <Typography
+                style={{ fontSize: "20px", fontWeight: 600, color: "#212121" }}
               >
                 {post.post.title}
-              </h4> */}
-              <NavLink to={`/postrequests?title=${post.post.title}&description=${post.post.description}`} className='text-2xl font-bold text-blue-800'>{post.post.title}</NavLink>
-
-              
-              {/* <Modal open={openModal} onClose={handleCloseModal}>
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: "50%",
-                    left: "50%",
-                    width: "80%",
-                    transform: "translate(-50%, -50%)",
-                    maxWidth: "100%", // Adjust the maximum width as needed
-                    bgcolor: "background.paper",
-                    boxShadow: 24,
-                    p: 4,
-                    overflowY: "auto", // Enable vertical scrolling
-                    maxHeight: "90vh", // Limit the maximum height to the viewport height
-                  }}
-                >
-                  <div className="pt-24 pl-24 pr-24">
-                    <h1 className="text-3xl text-blue-900 font-extrabold mb-4 underline">
-                      Pending Requests
-                    </h1>
-
-                    <div className="flex flex-row">
-
-                      <div className="mr-10">
-                        <img
-                          src={curr.logo}
-                          alt="img"
-                          className="border-2 border-blue-900 p-4 rounded-xl"
-                          height={400}
-                          width={400}
-                        />
-                      </div>
-
-                      <div>
-                        <h1 className="text-3xl text-blue-900 font-extrabold mb-4">
-                          {curr.title}
-                        </h1>
-                        <div className="w-100 mb-3 text-xl text-blue-800 font-semibold">
-                          {curr.description}
-                        </div>
-                      </div>
-                    </div>
-                    <UserRequest details={{id:1, email:"rohan@gmail.com"}} />
-                    <UserRequest details={{id:2, email:"r@gmail.com"}} />
+              </Typography>
+            </AccordionSummary>
+            <AccordionDetails>
+              <div className="flex flex-col">
+                <div className="flex flex-row">
+                  <div className="card-image w-1/2">
+                    <img src={post.post.logo} alt={post.post.title} />
                   </div>
-                </Box>
-              </Modal> */}
-            </div>
-          </div>
+                  <div className="card-body flex flex-col w-1/2 p-3">
+                    <h5 className="card-title font-bold text-2xl text-blue-800 mb-3">
+                      {post.post.title}
+                    </h5>
+                    <p className="card-text text-blue-600 mr-3">
+                      <span className="font-semibold">Posted By:</span>{" "}
+                      {post.email}
+                    </p>
+                    <p className="card-text text-blue-600 mr-3">
+                      <span className="font-semibold">Date:</span>{" "}
+                      {post.post.date}
+                    </p>
+                    <p className="card-text text-blue-600 mr-3">
+                      <span className="font-semibold">Domain:</span>{" "}
+                      {post.post.domain}
+                    </p>
+                    <p className="card-text text-blue-600 mr-3">
+                      <span className="font-semibold">Team Size:</span>{" "}
+                      {post.post.teamsize}
+                    </p>
+                    <p className="card-text text-blue-600 mr-3">
+                      <span className="font-semibold">Description</span>{" "}
+                      {post.post.description}
+                    </p>
+                    <p className="card-text text-blue-600 mr-3">
+                      <span className="font-semibold">Additional Details:</span>{" "}
+                      {post.post.details}
+                    </p>
+                  </div>
+                </div>
+                <br />
+                <br />
+                <div>
+                  <h5 className="card-title font-bold text-2xl text-blue-800 mb-3">
+                    {"  "}Selected Members
+                  </h5>
+                  <div className="flex flex-col">
+                    {post.post.selectedmembers.length > 0 ? (
+                      post.post.selectedmembers.map((member, index) => (
+                        <div className="flex flex-row">
+                          <p className="card-text text-blue-600 mr-3">
+                            {member.email}
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <h6> No member selected yet</h6>
+                    )}
+                  </div>
+                </div>
+                <br />
+                <br />
+                <div>
+                  <h6 className="card-title font-bold text-2xl text-blue-800 mb-3">
+                    {"  "}Received Applications
+                  </h6>
+                  <div className="flex flex-col">
+                    {post.post.appliedmembers.length > 0 ? (
+                      post.post.appliedmembers.map((member, index) => (
+                        <div style={{
+                          display:"flex",
+                          justifyContent:"space-between",
+                          marginTop:"20px",
+                        }}>
+                          <div className="flex flex-row">
+                            <p className="card-text text-blue-600 mr-3">
+                              {member.email}
+                            </p>
+                          </div>
+                          <div>
+                            <Button
+                              type="submit"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handleaccept(post._id, member.email);
+                              }}
+                              variant="success"
+                              style={{
+                                marginRight:"10px",
+                              }}
+                            >
+                              Accept
+                            </Button>
+                            <Button
+                              type="submit"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                handlereject(post._id, member.email);
+                              }}
+                              variant="danger"
+                              color="error"
+                              style={{
+                                marginRight:"20px",
+                              }}
+                            >
+                              Reject
+                            </Button>
+                          </div>
+                        </div>
+                      ))
+                    ) : (
+                      <h6> No more applications</h6>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </AccordionDetails>
+          </Accordion>
         ))}
         {/* <UserPost title={myposts.title} />
 
